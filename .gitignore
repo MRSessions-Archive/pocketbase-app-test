@@ -131,3 +131,6 @@ dist
 
 # PocketBase
 pb_data/
+
+# GO
+go.sum
