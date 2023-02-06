@@ -5,6 +5,7 @@ const routes = [
   {
     path: '/',
     component: () => import('@/layouts/default/Default.vue'),
+    redirect: '/home',
     children: [
       {
         path: '/home',
@@ -21,7 +22,17 @@ const routes = [
         name: 'Settings',
         component: () => import('@/views/Settings.vue'),
       },
+      {
+        path: '/error',
+        name: 'Error',
+        component: () => import('@/views/Error.vue'),
+      },
     ],
+  },
+  {
+    path: '/setup',
+    name: 'Setup',
+    component: () => import('@/views/Setup.vue'),
   },
 ]
 
