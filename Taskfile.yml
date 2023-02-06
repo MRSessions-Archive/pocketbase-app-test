@@ -1,23 +1,22 @@
 version: '3'
 
 tasks:
-  build:
-    deps: [assets]
-    cmds:
-      - go build -v -i main.go
+  run-app:
+    deps: [run pocket-base, run-vue-client]
 
-  assets:
+  run-pocket-base:
+    dir: ./pocket-base
     cmds:
-      - esbuild --bundle --minify css/index.css > public/bundle.css
+      - go run main.go serve #default port 8090
 
-  client-install:
-    dir: ./client
+  run-vue-client:
+    dir: ./vue-client
+    cmds:
+      - npm run dev
+
+  vue-client-install:
+    dir: ./vue-client
     preconditions:
       - test -f package.json
     cmds:
       - npm install
-
-  build-all:
-    cmds:
-      - npm install
-      - task client-install

@@ -1,3 +1,6 @@
+# Install Taskfile npm
+npm install -g @go-task/cli
+
 # Run PocketBase Docker
 docker run -d -p 8090:8090 --name pocketbase pocketbase/pocketbase
 

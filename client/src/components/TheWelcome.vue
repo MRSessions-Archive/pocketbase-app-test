@@ -9,9 +9,15 @@ import PocketBase from 'pocketbase'
 
 const pb = new PocketBase('http://127.0.0.1:8090')
 
-pb.collection('users').getList().then((res) => {
-  console.log(res)
-})
+let blah = await pb.send("/api/init-check", {
+    // for all possible options check
+    // https://developer.mozilla.org/en-US/docs/Web/API/fetch#options
+});
+
+console.log(blah)
+// pb.collection('users').getList().then((res) => {
+//   console.log(res)
+// })
 </script>
 
 <template>

@@ -14,7 +14,6 @@ func main() {
 
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		e.Router.GET("/api/init-check", func(c echo.Context) error {
-			// app.Settings()
 			var total int
 
 			err := app.DB().
@@ -29,16 +28,11 @@ func main() {
 					"isSetup": true,
 					"message": "Initial setup is complete",
 				})
-				// return c.String(200, string([]byte(`{"isSetup": "true","message": "Initial setup is complete"}`)))
 			}
 			return c.JSON(http.StatusOK, map[string]interface{}{
 				"isSetup": false,
 				"message": "Initial setup needed",
 			})
-			// t := strconv.Itoa(total)
-			// return c.String(200, fmt.Sprintf("%v admin setup", t))
-			// return c.String(200, blah)
-			// return c.String(200, "Hello world!")
 		})
 		return nil
 	})
