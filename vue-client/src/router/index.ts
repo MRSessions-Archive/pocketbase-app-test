@@ -30,10 +30,22 @@ const routes = [
     ],
   },
   {
-    path: '/setup',
-    name: 'Setup',
-    component: () => import('@/views/Setup.vue'),
+    path: '/n',
+    component: () => import('@/layouts/nonadmin/Default.vue'),
+    children: [
+      {
+        path: '/n/setup',
+        name: 'Setup',
+        component: () => import('@/views/Setup.vue'),
+      },
+      {
+        path: '/n/error',
+        name: 'AnonError',
+        component: () => import('@/views/Error.vue'),
+      },
+    ],
   },
+
 ]
 
 const router = createRouter({

@@ -8,23 +8,35 @@
 <script lang="ts" setup>
 import DefaultView from './View.vue'
 import DefaultAppBar from './AppBar.vue'
-import PocketBase from 'pocketbase'
+import { useInitStore } from '@/stores/init';
 import router from '@/router';
 
-const pb = new PocketBase('http://127.0.0.1:8090')
-
-// let blah = await pb.send("/api/init-check", {})
+const store = useInitStore()
 
 try {
-  let initCheck = await pb.send("/api/init-check", {})
-  if(!initCheck.isSetup) {
-    router.push('/setup')
+  await store.checkIsSetup()
+  if (!store.isSetup) {
+    router.push('/n/setup')
   }
-} catch(e) {
-  router.push('/error?msg=Something whent wrong with processing the request. ' +
-  'Please make sure that PocketBase is running and that the API is accessible.')
-  // router.push('/error?msg=blah')
+} catch (error) {
+  if (error instanceof Error) {
+    router.push('/n/error?msg=' + error.message)
+  }
 }
 
-// console.log(blah)
+console.log(store.isSetup)
+// import PocketBase from 'pocketbase'
+// import router from '@/router';
+
+// const pb = new PocketBase('http://127.0.0.1:8090')
+
+// try {
+//   let initCheck = await pb.send("/api/init-check", {})
+//   if(!initCheck.isSetup) {
+//     router.push('/setup')
+//   }
+// } catch(e) {
+//   router.push('/n/error?msg=Something whent wrong with processing the request. ' +
+//   'Please make sure that PocketBase is running and that the API is accessible.')
+// }
 </script>
