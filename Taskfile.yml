@@ -2,7 +2,7 @@ version: '3'
 
 tasks:
   run-app:
-    deps: [run pocket-base, run-vue-client]
+    deps: [run-pocket-base, run-vue-client]
 
   run-pocket-base:
     dir: ./pocket-base
@@ -20,3 +20,14 @@ tasks:
       - test -f package.json
     cmds:
       - npm install
+
+  clean-pb:
+    dir: ./pocket-base
+    cmds:
+      - rm -rf ./pb_data
+
+  # Cleans pb_data and runs pocket-base starting from scratch
+  run-pocket-base-clean:
+    cmds:
+      - task: clean-pb
+      - task: run-pocket-base

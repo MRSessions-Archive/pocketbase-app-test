@@ -55,6 +55,8 @@ import router from '@/router';
 
 const initStore = useInitStore()
 
+// TODO: Check if setup from init checkIsSetup Action
+// run this call in views/Setup.vue
 if(initStore.isSetup) {
   router.push('/')
 }
