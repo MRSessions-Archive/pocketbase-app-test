@@ -34,16 +34,7 @@ func main() {
 
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		var filePath = os.DirFS(publicDir)
-		log.Println("filePath", filePath)
-		entries, err := os.ReadDir("./dist")
-		if err != nil {
-			log.Fatal(err)
-		}
-		for _, entry := range entries {
-			log.Println(entry.Name())
-		}
 		var blah = apis.StaticDirectoryHandler(filePath, indexFallback)
-		log.Println("blah", blah)
 		e.Router.GET("/*", blah)
 		return nil
 	})
@@ -81,7 +72,6 @@ func main() {
 // the default pb_public dir location is relative to the executable
 func defaultPublicDir() string {
 	if strings.HasPrefix(os.Args[0], os.TempDir()) {
-		// most likely ran with go run
 		return "./dist"
 	}
 	return filepath.Join(os.Args[0], "../dist")
