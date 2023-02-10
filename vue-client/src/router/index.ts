@@ -27,6 +27,15 @@ const routes = [
         name: 'Error',
         component: () => import('@/views/Error.vue'),
       },
+      {
+        // path: "*",
+        path: "/:catchAll(.*)",
+        name: "NotFound",
+        component: () => import("@/views/NotFound.vue"),
+        // meta: {
+        //   requiresAuth: false
+        // }
+      }
     ],
   },
   {
@@ -45,7 +54,6 @@ const routes = [
       },
     ],
   },
-
 ]
 
 const router = createRouter({

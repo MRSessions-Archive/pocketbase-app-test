@@ -9,6 +9,16 @@ tasks:
     cmds:
       - go run main.go serve #default port 8090
 
+  run-pocket-base-debug:
+    dir: ./pocket-base
+    cmds:
+      - go run main.go serve --debug #default port 8090
+
+  run-pocket-base-prod:
+    dir: ./pocket-base
+    cmds:
+      - go run main.go serve --http="0.0.0.0:8090"
+
   run-vue-client:
     dir: ./vue-client
     cmds:

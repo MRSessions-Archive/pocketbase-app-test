@@ -131,3 +131,5 @@ dist
 
 # PocketBase
 pb_data/
+vue-client/src/views/NotFound.vue
+.gitignore

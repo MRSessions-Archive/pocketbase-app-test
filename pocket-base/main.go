@@ -3,14 +3,50 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
+	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 )
 
 func main() {
 	app := pocketbase.New()
+
+	var publicDir string
+	app.RootCmd.PersistentFlags().StringVar(
+		&publicDir,
+		"publicDir",
+		defaultPublicDir(),
+		"the directory to serve static files",
+	)
+
+	var indexFallback bool
+	app.RootCmd.PersistentFlags().BoolVar(
+		&indexFallback,
+		"indexFallback",
+		true,
+		"fallback the request to index.html on missing static path (eg. when pretty urls are used with SPA)",
+	)
+
+	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
+		var filePath = os.DirFS(publicDir)
+		log.Println("filePath", filePath)
+		entries, err := os.ReadDir("./dist")
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, entry := range entries {
+			log.Println(entry.Name())
+		}
+		var blah = apis.StaticDirectoryHandler(filePath, indexFallback)
+		log.Println("blah", blah)
+		e.Router.GET("/*", blah)
+		return nil
+	})
 
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		e.Router.GET("/api/init-check", func(c echo.Context) error {
@@ -36,7 +72,17 @@ func main() {
 		})
 		return nil
 	})
+
 	if err := app.Start(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+// the default pb_public dir location is relative to the executable
+func defaultPublicDir() string {
+	if strings.HasPrefix(os.Args[0], os.TempDir()) {
+		// most likely ran with go run
+		return "./dist"
+	}
+	return filepath.Join(os.Args[0], "../dist")
 }

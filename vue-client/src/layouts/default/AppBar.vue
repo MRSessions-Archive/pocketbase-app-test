@@ -14,7 +14,10 @@
     <v-btn variant="text" icon="mdi-dots-vertical"></v-btn>
   </v-app-bar>
 
-  <v-navigation-drawer v-model="drawer" permanent>
+  <v-navigation-drawer
+  v-model="drawer"
+  :location="$vuetify.display.smAndDown ? 'top': 'start'"
+  :permanent="$vuetify.display.smAndDown ? false : true">
     <v-list>
       <v-list-item v-for="item in items" :key="item.title" :to="item.value">{{ item.title }}</v-list-item>
     </v-list>
@@ -30,31 +33,47 @@
   </v-navigation-drawer>
 </template>
 
-<script lang="ts">
-export default {
-  data: () => ({
-    drawer: true,
-    group: null,
-    items: [
-      {
-        title: 'Home',
-        value: '/home',
-      },
-      {
-        title: 'About',
-        value: '/about',
-      },
-      {
-        title: 'Settings',
-        value: '/settings',
-      }
-    ],
-  }),
+<script setup lang="ts">
+import { ref, watch } from 'vue'
 
-  watch: {
-    group() {
-      this.drawer = false
-    },
+const drawer = ref(true)
+const items = ref([
+  {
+    title: 'Home',
+    value: '/home',
   },
-}
+  {
+    title: 'About',
+    value: '/about',
+  },
+  {
+    title: 'Settings',
+    value: '/settings',
+  },
+  {
+    title: 'blah'
+  },
+  {
+    title: 'blah'
+  },
+  {
+    title: 'blah'
+  },
+  {
+    title: 'blah'
+  },
+  {
+    title: 'blah'
+  },
+  {
+    title: 'blah'
+  },
+  {
+    title: 'blah'
+  }
+])
+
+watch(drawer, (v) => {
+  drawer.value = v
+})
 </script>
