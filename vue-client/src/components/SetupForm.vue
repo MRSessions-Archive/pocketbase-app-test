@@ -72,8 +72,6 @@ const valid = ref(false);
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
 
-
-
 async function setup() {
   try {
     const registerSuccess = await initStore.register()
@@ -86,9 +84,5 @@ async function setup() {
     }
   }
 }
-
-
-
-
 
 </script>

@@ -3,11 +3,13 @@ FROM golang:1.20.0-alpine3.17 AS builder
 
 WORKDIR /app
 
-COPY ./pocket-base/go.mod ./pocket-base/go.sum ./
+COPY ./pocketbase-server/go.mod ./pocketbase-server/go.sum ./
 
 RUN go mod download
 
-COPY ./pocket-base/*.go .
+COPY ./pocketbase-server/*.go .
+
+COPY ./pocketbase-server/migrations ./migrations
 
 RUN go build -o pocket-base
 

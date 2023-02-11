@@ -5,17 +5,17 @@ tasks:
     deps: [run-pocket-base, run-vue-client]
 
   run-pocket-base:
-    dir: ./pocket-base
+    dir: ./pocketbase-server
     cmds:
       - go run main.go serve #default port 8090
 
   run-pocket-base-debug:
-    dir: ./pocket-base
+    dir: ./pocketbase-server
     cmds:
       - go run main.go serve --debug #default port 8090
 
   run-pocket-base-prod:
-    dir: ./pocket-base
+    dir: ./pocketbase-server
     cmds:
       - go run main.go serve --http="0.0.0.0:8090"
 
@@ -32,7 +32,7 @@ tasks:
       - npm install
 
   clean-pb:
-    dir: ./pocket-base
+    dir: ./pocketbase-server
     cmds:
       - rm -rf ./pb_data
 
